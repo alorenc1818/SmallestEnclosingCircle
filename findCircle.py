@@ -1,5 +1,5 @@
 import math as m
-def findCircle(p1, p2, p3):
+def findCircleFromTriple(p1, p2, p3):
     """
     Returns the center and radius of the circle passing the given 3 points.
     In case the 3 points form a line, returns (None, infinity).
@@ -27,3 +27,26 @@ def isInCircle(circle, point):
         return True
     else:
         return False
+
+def isEnclosingCircle(circle,points):
+    ret=True
+    for point in points:
+        if not isInCircle(circle,point):
+            ret=False
+    return ret
+
+def findCircle(points):
+    n=len(points)
+    circle=((0,0),0)
+    for i in range(n):
+            for j in range(n):
+                for k in range(n):
+                    if i!=j and j!=k and k!=i:
+                        c=findCircleFromTriple(points[i][0],points[j][0],points[k][0])
+                        flag=True
+                        for point in points:
+                            if not isInCircle(c,point):
+                                flag=False
+                        if flag:
+                            circle=c
+    return circle
